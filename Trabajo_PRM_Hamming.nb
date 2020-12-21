@@ -1,0 +1,652 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     25693,        642]
+NotebookOptionsPosition[     22852,        594]
+NotebookOutlinePosition[     23194,        609]
+CellTagsIndexPosition[     23151,        606]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["\<\
+1.2 Ariketa [TD Septiembre 1998] 
+Decodifique  los  vectores  1100001,  1010101  y  0111100  suponiendo  que  \
+son  versiones  ruidosas  de  vectores de c\[OAcute]digo de un c\[OAcute]digo \
+Hamming (7,4) que determina los bits de paridad con las ecuaciones:  
+x4=x0+x1+x2 (mod 2)  
+x5=x0+x1+x3 (mod 2)  
+x6=x0+x2+x3 (mod 2)
+ Sup\[OAcute]nganse la regla de decodificaci\[OAcute]n vista en la teor\
+\[IAcute]a donde se estimaba como verdadero el vector de menor error \
+potencial. Indicar cu\[AAcute]l es la secuencia de bits de \
+informaci\[OAcute]n pura que se transmite entre estaciones y cu\[AAcute]les \
+son los bits redundantes\
+\>", "Text",
+ CellChangeTimes->{{3.817541646754711*^9, 
+  3.81754166789642*^9}},ExpressionUUID->"e1cf46b1-26c3-4b16-9cef-\
+e6e98140936c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Hamming", " ", "7"}], ",", 
+    RowBox[{"4", " ", "erabiltzen", " ", "ari", " ", "garenez"}], ",", " ", 
+    RowBox[{
+    "eta", " ", "hiru", " ", "bit", " ", "erredundanteen", " ", "posizioa", 
+     " ", "ematen", " ", "digutenez"}], ",", " ", 
+    RowBox[{
+     RowBox[{"badakigu", " ", "jasotako", " ", "informazio", " ", "stream"}], 
+     "-", 
+     RowBox[{
+     "etan", " ", "lehenengo", " ", "lau", " ", "bitek", " ", "informazioa", 
+      " ", "errepresentatuko", " ", "dutela", " ", "eta", " ", "azkenenko", 
+      " ", "hiru", " ", "bitek", " ", "erroreak", " ", "detektatzeko", " ", 
+      "eta", " ", "zuzentzeko", " ", "erabiliko", " ", "den", " ", 
+      "informazio", " ", "erredundantea", " ", "dela"}]}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"fx4", "[", "str_", "]"}], ":=", 
+     RowBox[{"Mod", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"str", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "+", 
+        RowBox[{"str", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "+", 
+        RowBox[{"str", "[", 
+         RowBox[{"[", "3", "]"}], "]"}]}], ",", "2"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"fx5", "[", "str_", "]"}], ":=", 
+     RowBox[{"Mod", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"str", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "+", 
+        RowBox[{"str", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "+", 
+        RowBox[{"str", "[", 
+         RowBox[{"[", "4", "]"}], "]"}]}], ",", "2"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"fx6", "[", "str_", "]"}], ":=", 
+     RowBox[{"Mod", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"str", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "+", 
+        RowBox[{"str", "[", 
+         RowBox[{"[", "3", "]"}], "]"}], "+", 
+        RowBox[{"str", "[", 
+         RowBox[{"[", "4", "]"}], "]"}]}], ",", "2"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"str", "=", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1", ",", "0", ",", "0"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"str", "=", 
+    RowBox[{"AppendTo", "[", 
+     RowBox[{"str", ",", 
+      RowBox[{"fx4", "[", "str", "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"str", "=", 
+    RowBox[{"AppendTo", "[", 
+     RowBox[{"str", ",", 
+      RowBox[{"fx5", "[", "str", "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"str", "=", 
+    RowBox[{"AppendTo", "[", 
+     RowBox[{"str", ",", 
+      RowBox[{"fx6", "[", "str", "]"}]}], "]"}]}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{
+  3.817541684810935*^9, {3.817541754453229*^9, 3.8175419543429413`*^9}, {
+   3.8175420226459637`*^9, 3.817542111197579*^9}, {3.817542144320783*^9, 
+   3.8175421856422462`*^9}, {3.8175422335007315`*^9, 3.81754233089262*^9}, 
+   3.817542410668144*^9, {3.817542441178011*^9, 3.8175425721299915`*^9}, {
+   3.817542605286128*^9, 3.8175426433261614`*^9}},
+ CellLabel->"In[26]:=",ExpressionUUID->"52d19c72-4a39-4e5e-8c39-7e90e607b4f8"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1", ",", "0", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.8175424905642557`*^9, {3.8175425739892645`*^9, 3.817542588736146*^9}, {
+   3.8175426239994264`*^9, 3.817542644617773*^9}},
+ CellLabel->"Out[30]=",ExpressionUUID->"784aa25c-b078-4084-a829-f7425a02c749"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.8175424905642557`*^9, {3.8175425739892645`*^9, 3.817542588736146*^9}, {
+   3.8175426239994264`*^9, 3.817542644617773*^9}},
+ CellLabel->"Out[31]=",ExpressionUUID->"cbc5b02c-1b14-49c2-8401-f3c232dc0b9c"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.8175424905642557`*^9, {3.8175425739892645`*^9, 3.817542588736146*^9}, {
+   3.8175426239994264`*^9, 3.8175426446334467`*^9}},
+ CellLabel->"Out[32]=",ExpressionUUID->"7d1d44c2-1bf5-475b-bbba-def5e126e78c"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Ikus", " ", "daitekenez"}], ",", " ", 
+    RowBox[{
+     RowBox[{"lehenengo", " ", "informazio", " ", "stream"}], "-", 
+     RowBox[{
+     "a", " ", "hartuz", " ", "funtzioek", " ", "emandako", " ", "balioak", 
+      " ", "jasotakoaren", " ", "berdinak", " ", "dira"}]}], ",", " ", 
+    "beraz", ",", " ", 
+    RowBox[{
+    "probabilitate", " ", "handia", " ", "dago", " ", "kasu", " ", "honetan", 
+     " ", "errorerik", " ", "gertatu", " ", "ez", " ", "izana"}]}], 
+   "*)"}]}]], "Input",
+ CellChangeTimes->{{3.8175426798811035`*^9, 
+  3.8175427582721014`*^9}},ExpressionUUID->"78e77cc9-feeb-4552-b9c2-\
+62076b53006f"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "Hiru", " ", "funtzio", " ", "hauek", " ", "informazio", " ", 
+     "erredundantea", " ", "osatuko", " ", "duten", " ", "biten", " ", 
+     "balioa", " ", "ondorioztatzeko", " ", "balio", " ", 
+     RowBox[{"dute", ".", " ", "Funtzio"}], " ", "horietatik", " ", 
+     "abiatuz"}], ",", " ", 
+    RowBox[{
+    "datu", " ", "guztiak", " ", "eskumarantz", " ", "eramata", " ", "H", " ",
+      "matrizea", " ", "lortuko", " ", "dugu"}], ",", " ", 
+    RowBox[{
+    "jasotako", " ", "datuetan", " ", "erroreak", " ", "antzematea", " ", 
+     "eta", " ", "zuzentzea", " ", "ahalbidetuko", " ", "diguna"}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"H", "=", 
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"1", "1", "1", "0", "1", "0", "0"},
+       {"1", "1", "0", "1", "0", "1", "0"},
+       {"1", "0", "1", "1", "0", "0", "1"}
+      }], "\[NoBreak]", ")"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.8175426078530564`*^9, 
+  3.817542608820814*^9}},ExpressionUUID->"37c16b8e-3bc4-4566-94a9-\
+38937c3e0d28"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Teorian", " ", "ikusitakoarekin"}], ",", " ", 
+    RowBox[{
+     RowBox[{
+     "sindromearen", " ", "teknika", " ", "erabiliko", " ", "dugu", " ", 
+      "harreran", " ", "errorea", " ", "gertatu", " ", "den", " ", "ala", " ",
+       "ez", " ", 
+      RowBox[{"egiaztatzeko", ".", " ", "Non"}], " ", "S"}], " ", "=", " ", 
+     RowBox[{
+      RowBox[{"H", " ", "*", " ", "y", 
+       RowBox[{"(", "transposed", ")"}]}], "=", " ", 
+      RowBox[{"H", " ", "*", " ", 
+       RowBox[{"(", 
+        RowBox[{"x", " ", "+", " ", "z"}], ")"}], 
+       RowBox[{
+        RowBox[{"(", "trans", ")"}], ".", " ", "Formula"}], " ", "hau", " ", 
+       "jakinda"}]}]}], ",", " ", 
+    RowBox[{
+    "badakigu", " ", "z", " ", "bektorea", " ", "x", " ", "bektrore", " ", 
+     "originalari", " ", "kanalean", " ", "sortutako", " ", "zarata", " ", 
+     "gehitzen", " ", "diola", " ", "eta", " ", "x", " ", "bektorea", " ", 
+     "berez", " ", "H", " ", "matrizearekin", " ", "biderkatuz", " ", 
+     "lortutak", " ", "oemaitza", " ", "zero", " ", 
+     RowBox[{"dela", ".", " ", "Beraz"}]}], ",", " ", 
+    RowBox[{
+    "biderkaketa", " ", "egiterakoan", " ", "erroreak", " ", "non", " ", 
+     "gertatu", " ", "diren", " ", "jakin", " ", "izango", " ", "dugu"}]}], 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"y1", "=", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1"}], 
+      "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"y2", "=", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1"}], 
+      "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"y3", "=", 
+     RowBox[{"{", 
+      RowBox[{
+      "0", ",", "1", ",", "1", ",", "1", ",", "1", ",", "0", ",", "0"}], 
+      "}"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"S1", "=", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{"H", ".", "y1"}], ",", "2"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"S2", "=", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{"H", ".", "y2"}], ",", "2"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"S3", "=", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{"H", ".", "y3"}], ",", "2"}], "]"}]}], " ", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Matrizeen", " ", "biderkaketa", " ", "egitean", " ", "baloreen", " ", 
+      "gehiketa", " ", "egiten", " ", "da"}], ",", " ", 
+     RowBox[{
+     "horregatik", " ", "jasotako", " ", "emaitzaren", " ", "biren", " ", 
+      "modulua", " ", "egin", " ", "behar", " ", "da"}]}], "*)"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.817542771692826*^9, 3.817542772646489*^9}, {
+   3.8175439462653103`*^9, 3.8175441104544697`*^9}, {3.817544157185417*^9, 
+   3.8175442729246163`*^9}, {3.8175443253776217`*^9, 3.817544575671701*^9}, {
+   3.8175454778556914`*^9, 3.8175454845492*^9}, {3.8175456533550344`*^9, 
+   3.8175456827416267`*^9}, {3.8175457226252613`*^9, 3.817545731294962*^9}, 
+   3.8175462807006006`*^9},
+ CellLabel->
+  "In[159]:=",ExpressionUUID->"b91016ed-831c-4930-a6b2-60240e8cbb96"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{{3.8175443954534*^9, 3.817544488712271*^9}, 
+   3.8175445296650143`*^9, 3.8175454850676823`*^9, {3.8175456581867886`*^9, 
+   3.8175456834302483`*^9}, 3.817545731628545*^9, 3.817546281357733*^9},
+ CellLabel->
+  "Out[162]=",ExpressionUUID->"a20f43f2-031c-4ceb-89a7-5b5565800441"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1", ",", "1"}], "}"}]], "Output",
+ CellChangeTimes->{{3.8175443954534*^9, 3.817544488712271*^9}, 
+   3.8175445296650143`*^9, 3.8175454850676823`*^9, {3.8175456581867886`*^9, 
+   3.8175456834302483`*^9}, 3.817545731628545*^9, 3.817546281357733*^9},
+ CellLabel->
+  "Out[163]=",ExpressionUUID->"72b1add0-63b6-4c12-b4b8-6b6901cca3b4"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{{3.8175443954534*^9, 3.817544488712271*^9}, 
+   3.8175445296650143`*^9, 3.8175454850676823`*^9, {3.8175456581867886`*^9, 
+   3.8175456834302483`*^9}, 3.817545731628545*^9, 3.817546281373393*^9},
+ CellLabel->
+  "Out[164]=",ExpressionUUID->"8a72d8cc-4bbf-442b-97dd-dd2227cccf51"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"JAsotako", " ", "emaitzekin"}], ",", " ", 
+    RowBox[{
+     RowBox[{"badakigu", " ", "lehenengo", " ", "informazio", " ", "stream"}],
+      "-", 
+     RowBox[{
+     "a", " ", "errorerik", " ", "agbe", " ", "bidali", " ", "dela"}]}], ",", 
+    " ", 
+    RowBox[{
+    "bektore", " ", "erresultantea", " ", "bektore", " ", "huts", " ", "bat", 
+     " ", "da"}], ",", " ", 
+    RowBox[{
+     RowBox[{
+     "jatorrizko", " ", "informazio", " ", "berarekin", " ", "lortuko", " ", 
+      RowBox[{"genukeena", ".", " ", "Beste"}], " ", "bi", " ", "stream"}], 
+     "-", 
+     RowBox[{
+     "ek", " ", "aldiz", " ", "bai", " ", "dituzte", " ", "erroreak"}]}], ",",
+     " ", 
+    RowBox[{
+    "eta", " ", "zein", " ", "bitetan", " ", "gertatu", " ", "den", " ", 
+     "detektatzeko", " ", "hurrengo", " ", "funtzioa", " ", "erabiliko", " ", 
+     "dugu"}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ErrorePosizioa", "[", 
+     RowBox[{"H_", ",", "emaitza_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"dim", "=", 
+         RowBox[{"Dimensions", "[", "H", "]"}]}], ",", 
+        RowBox[{"bit", "=", "\"\<Ez dago errorerik\>\""}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "0"}], ",", 
+         RowBox[{"i", "<", 
+          RowBox[{"dim", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+         RowBox[{"i", "++"}], ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"H", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "\[Equal]", 
+             RowBox[{"emaitza", "[", 
+              RowBox[{"[", "1", "]"}], "]"}]}], " ", "&&", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"H", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "\[Equal]", 
+             RowBox[{"emaitza", "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], " ", "&&", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"H", "[", 
+               RowBox[{"[", "3", "]"}], "]"}], "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "==", 
+             RowBox[{"emaitza", "[", 
+              RowBox[{"[", "3", "]"}], "]"}]}]}], ",", 
+           RowBox[{"bit", "=", "i"}]}], "]"}]}], "]"}], ";", "bit"}]}], 
+     "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"erroreaY1", "=", 
+    RowBox[{"ErrorePosizioa", "[", 
+     RowBox[{"H", ",", "S1"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"erroreaY2", "=", 
+    RowBox[{"ErrorePosizioa", "[", 
+     RowBox[{"H", ",", "S2"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"erroreaY3", "=", 
+    RowBox[{"ErrorePosizioa", "[", 
+     RowBox[{"H", ",", "S3"}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.817544638898875*^9, 3.817544834099203*^9}, {
+   3.817544927358229*^9, 3.817544948222582*^9}, {3.8175449881025734`*^9, 
+   3.817544992091402*^9}, {3.817545075638809*^9, 3.8175451395751915`*^9}, {
+   3.8175451712318754`*^9, 3.8175453512184*^9}, {3.8175454211890483`*^9, 
+   3.8175454502662897`*^9}, {3.8175455265695453`*^9, 3.817545548472432*^9}, {
+   3.8175455940674925`*^9, 3.8175456154055157`*^9}, {3.8175458478241205`*^9, 
+   3.8175458727463803`*^9}, 3.8175460542848277`*^9, {3.817546095009557*^9, 
+   3.817546109428472*^9}, {3.8175461572840676`*^9, 3.817546243984795*^9}},
+ CellLabel->
+  "In[155]:=",ExpressionUUID->"b3d27bab-fcc7-420f-b305-c7c0e6821dcd"],
+
+Cell[BoxData["\<\"Ez dago errorerik\"\>"], "Output",
+ CellChangeTimes->{{3.8175460956981397`*^9, 3.817546109930879*^9}, {
+  3.817546162718459*^9, 3.8175462447048855`*^9}},
+ CellLabel->
+  "Out[156]=",ExpressionUUID->"118554e4-ad86-43c6-bd0e-1d15602c0598"],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{{3.8175460956981397`*^9, 3.817546109930879*^9}, {
+  3.817546162718459*^9, 3.8175462447048855`*^9}},
+ CellLabel->
+  "Out[157]=",ExpressionUUID->"83dcaa18-7e84-4fa7-98c8-bc5d1522686c"],
+
+Cell[BoxData["5"], "Output",
+ CellChangeTimes->{{3.8175460956981397`*^9, 3.817546109930879*^9}, {
+  3.817546162718459*^9, 3.817546244720503*^9}},
+ CellLabel->
+  "Out[158]=",ExpressionUUID->"888b8736-dfb8-42e0-b49f-2263222b71e1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Azkenik", ",", " ", 
+    RowBox[{
+    "errore", " ", "horiek", " ", "zuzenduko", " ", "ditugu", " ", "eta", " ",
+      "bidalitako", " ", "informazio", " ", "purua", " ", "lortuko", " ", 
+     "dugu"}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"ErroreZuzenketa", "[", 
+      RowBox[{"str_", ",", "errorePos_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"n", "=", "1"}], "}"}], ",", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"errorePos", "\[Equal]", "\"\<Ez dago errorerik\>\""}], ",", 
+         "str", ",", 
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"n", "++"}], "\[Equal]", "errorePos"}], ",", 
+              RowBox[{"Mod", "[", 
+               RowBox[{
+                RowBox[{"#", "+", "1"}], ",", "2"}], "]"}], ",", "#"}], "]"}],
+             "&"}], ",", "str"}], "]"}]}], "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"jatorrizkoX1", "=", 
+    RowBox[{"ErroreZuzenketa", "[", 
+     RowBox[{"y1", ",", "erroreaY1"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"jatorrizkoX2", "=", 
+    RowBox[{"ErroreZuzenketa", "[", 
+     RowBox[{"y2", ",", "erroreaY2"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"jatorrizkoX3", "=", 
+    RowBox[{"ErroreZuzenketa", "[", 
+     RowBox[{"y3", ",", "erroreaY3"}], "]"}]}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.817546350003581*^9, 3.8175464293634677`*^9}, {
+  3.8175464732883515`*^9, 3.817546715311653*^9}, {3.81754674987908*^9, 
+  3.817546762513791*^9}, {3.8175468135528708`*^9, 3.8175468158053417`*^9}, {
+  3.81754690650496*^9, 3.8175469507355433`*^9}, {3.8175469878600187`*^9, 
+  3.8175470596823826`*^9}, {3.8175471608518105`*^9, 3.8175471619589605`*^9}},
+ CellLabel->
+  "In[250]:=",ExpressionUUID->"8d2a0f15-ef32-456c-bf11-0f7955a7bff8"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.8175466342130513`*^9, 3.817546677267005*^9}, 
+   3.8175467158515453`*^9, 3.8175467640398192`*^9, 3.8175468009822736`*^9, {
+   3.81754689602753*^9, 3.817546919479991*^9}, 3.8175469515184145`*^9, {
+   3.8175469887659817`*^9, 3.8175470074327726`*^9}, {3.817547037953637*^9, 
+   3.817547060315836*^9}, 3.817547162684826*^9},
+ CellLabel->
+  "Out[251]=",ExpressionUUID->"335fe921-3691-40d6-a135-53132563a9eb"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.8175466342130513`*^9, 3.817546677267005*^9}, 
+   3.8175467158515453`*^9, 3.8175467640398192`*^9, 3.8175468009822736`*^9, {
+   3.81754689602753*^9, 3.817546919479991*^9}, 3.8175469515184145`*^9, {
+   3.8175469887659817`*^9, 3.8175470074327726`*^9}, {3.817547037953637*^9, 
+   3.817547060315836*^9}, 3.817547162684826*^9},
+ CellLabel->
+  "Out[252]=",ExpressionUUID->"69d984a4-94ab-4684-ba3a-b2f81d3129f6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "1", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.8175466342130513`*^9, 3.817546677267005*^9}, 
+   3.8175467158515453`*^9, 3.8175467640398192`*^9, 3.8175468009822736`*^9, {
+   3.81754689602753*^9, 3.817546919479991*^9}, 3.8175469515184145`*^9, {
+   3.8175469887659817`*^9, 3.8175470074327726`*^9}, {3.817547037953637*^9, 
+   3.817547060315836*^9}, 3.817547162700489*^9},
+ CellLabel->
+  "Out[253]=",ExpressionUUID->"022e0c11-907a-435a-a1c5-90081429b049"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Hauek", " ", "dira", " ", "jasotako", " ", "emaitza", " ", "finalak"}], 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"x1Purua", "=", 
+    RowBox[{"jatorrizkoX1", "[", 
+     RowBox[{"[", 
+      RowBox[{"1", ";;", "4"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"x2Purua", "=", 
+    RowBox[{"jatorrizkoX2", "[", 
+     RowBox[{"[", 
+      RowBox[{"1", ";;", "4"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"x3Purua", "=", 
+    RowBox[{"jatorrizkoX3", "[", 
+     RowBox[{"[", 
+      RowBox[{"1", ";;", "4"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"x1Erredundantea", "=", 
+    RowBox[{"jatorrizkoX1", "[", 
+     RowBox[{"[", 
+      RowBox[{"5", ";;", "7"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"x2Erredundantea", "=", 
+    RowBox[{"jatorrizkoX2", "[", 
+     RowBox[{"[", 
+      RowBox[{"5", ";;", "7"}], "]"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"x3Erredundantea", "=", 
+    RowBox[{"jatorrizkoX3", "[", 
+     RowBox[{"[", 
+      RowBox[{"5", ";;", "7"}], "]"}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.8175471642094946`*^9, 3.8175472550234013`*^9}},
+ CellLabel->
+  "In[262]:=",ExpressionUUID->"b9af1b45-92ed-4a02-bd1a-eb331555099d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{{3.817547226807938*^9, 3.817547255827977*^9}},
+ CellLabel->
+  "Out[262]=",ExpressionUUID->"7bd79ca7-6821-4ee3-ad8d-52adb377ae2f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "1", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{{3.817547226807938*^9, 3.817547255827977*^9}},
+ CellLabel->
+  "Out[263]=",ExpressionUUID->"26c81f41-6ab3-4e63-9874-13823520cfa9"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "1", ",", "1", ",", "1"}], "}"}]], "Output",
+ CellChangeTimes->{{3.817547226807938*^9, 3.8175472558436003`*^9}},
+ CellLabel->
+  "Out[264]=",ExpressionUUID->"55b58d1e-b7e4-42a7-a267-eb48926ec96a"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "1"}], "}"}]], "Output",
+ CellChangeTimes->{{3.817547226807938*^9, 3.8175472558436003`*^9}},
+ CellLabel->
+  "Out[265]=",ExpressionUUID->"91d572c0-bcc3-4c4d-9ec0-79f71519d1d1"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "0", ",", "1"}], "}"}]], "Output",
+ CellChangeTimes->{{3.817547226807938*^9, 3.8175472558436003`*^9}},
+ CellLabel->
+  "Out[266]=",ExpressionUUID->"71c621ff-263a-40f1-8703-0395a2217f61"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{{3.817547226807938*^9, 3.8175472558436003`*^9}},
+ CellLabel->
+  "Out[267]=",ExpressionUUID->"3bddbe6b-3326-4639-a10f-96fc8c8b22eb"]
+}, Open  ]]
+},
+WindowSize->{681, 676},
+WindowMargins->{{-7, Automatic}, {Automatic, 0}},
+FrontEndVersion->"12.0 para Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 782, 16, 232, "Text",ExpressionUUID->"e1cf46b1-26c3-4b16-9cef-e6e98140936c"],
+Cell[CellGroupData[{
+Cell[1365, 40, 3167, 83, 403, "Input",ExpressionUUID->"52d19c72-4a39-4e5e-8c39-7e90e607b4f8"],
+Cell[4535, 125, 329, 6, 32, "Output",ExpressionUUID->"784aa25c-b078-4084-a829-f7425a02c749"],
+Cell[4867, 133, 342, 7, 32, "Output",ExpressionUUID->"cbc5b02c-1b14-49c2-8401-f3c232dc0b9c"],
+Cell[5212, 142, 354, 7, 32, "Output",ExpressionUUID->"7d1d44c2-1bf5-475b-bbba-def5e126e78c"]
+}, Open  ]],
+Cell[5581, 152, 709, 17, 105, "Input",ExpressionUUID->"78e77cc9-feeb-4552-b9c2-62076b53006f"],
+Cell[6293, 171, 1114, 26, 159, "Input",ExpressionUUID->"37c16b8e-3bc4-4566-94a9-38937c3e0d28"],
+Cell[CellGroupData[{
+Cell[7432, 201, 3213, 78, 387, "Input",ExpressionUUID->"b91016ed-831c-4930-a6b2-60240e8cbb96"],
+Cell[10648, 281, 380, 7, 32, "Output",ExpressionUUID->"a20f43f2-031c-4ceb-89a7-5b5565800441"],
+Cell[11031, 290, 380, 7, 32, "Output",ExpressionUUID->"72b1add0-63b6-4c12-b4b8-6b6901cca3b4"],
+Cell[11414, 299, 380, 7, 32, "Output",ExpressionUUID->"8a72d8cc-4bbf-442b-97dd-dd2227cccf51"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11831, 311, 3743, 91, 387, "Input",ExpressionUUID->"b3d27bab-fcc7-420f-b305-c7c0e6821dcd"],
+Cell[15577, 404, 254, 4, 32, "Output",ExpressionUUID->"118554e4-ad86-43c6-bd0e-1d15602c0598"],
+Cell[15834, 410, 230, 4, 32, "Output",ExpressionUUID->"83dcaa18-7e84-4fa7-98c8-bc5d1522686c"],
+Cell[16067, 416, 228, 4, 32, "Output",ExpressionUUID->"888b8736-dfb8-42e0-b49f-2263222b71e1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16332, 425, 2044, 49, 236, "Input",ExpressionUUID->"8d2a0f15-ef32-456c-bf11-0f7955a7bff8"],
+Cell[18379, 476, 552, 10, 32, "Output",ExpressionUUID->"335fe921-3691-40d6-a135-53132563a9eb"],
+Cell[18934, 488, 552, 10, 32, "Output",ExpressionUUID->"69d984a4-94ab-4684-ba3a-b2f81d3129f6"],
+Cell[19489, 500, 552, 10, 32, "Output",ExpressionUUID->"022e0c11-907a-435a-a1c5-90081429b049"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20078, 515, 1310, 34, 181, "Input",ExpressionUUID->"b9af1b45-92ed-4a02-bd1a-eb331555099d"],
+Cell[21391, 551, 242, 5, 32, "Output",ExpressionUUID->"7bd79ca7-6821-4ee3-ad8d-52adb377ae2f"],
+Cell[21636, 558, 242, 5, 32, "Output",ExpressionUUID->"26c81f41-6ab3-4e63-9874-13823520cfa9"],
+Cell[21881, 565, 244, 5, 32, "Output",ExpressionUUID->"55b58d1e-b7e4-42a7-a267-eb48926ec96a"],
+Cell[22128, 572, 234, 5, 32, "Output",ExpressionUUID->"91d572c0-bcc3-4c4d-9ec0-79f71519d1d1"],
+Cell[22365, 579, 234, 5, 32, "Output",ExpressionUUID->"71c621ff-263a-40f1-8703-0395a2217f61"],
+Cell[22602, 586, 234, 5, 32, "Output",ExpressionUUID->"3bddbe6b-3326-4639-a10f-96fc8c8b22eb"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
